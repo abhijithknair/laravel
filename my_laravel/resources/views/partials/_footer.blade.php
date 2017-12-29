@@ -1,0 +1,1 @@
+<footer class="footerhighlight2">2017 &copy Copyright. All rights reserved.</footer>
