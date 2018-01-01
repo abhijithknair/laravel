@@ -12,14 +12,14 @@ class IssueModel extends BaseIssueModel
     {
 
         if ($issues) {
-            print_r($issues);die;
+//            print_r($issues);die;
 
             $this->desc = $issues['desc'];
             $this->status = $issues['status'];
             $this->filepath = $issues['filepath'];
             $this->user_id = $issues['user_id'];
-            $this->fname = $issues['fname'];
-            $this->email = $issues['email'];
+//            $this->fname = $issues['fname'];
+//            $this->email = $issues['email'];
         }
 
 
@@ -93,6 +93,30 @@ class IssueModel extends BaseIssueModel
 
             if($result){
                 $result->status = 'Resolved';
+                if ($result->save()) {
+                    $returnData = "Success";
+                } else {
+                    $returnData = "Error";
+                }
+            }
+
+        }
+        return $returnData;
+    }
+
+
+    public function userPendingUpdate($issues){
+        $returnData = [];
+        if ($issues) {
+
+
+//            print_r($issues);die;
+            $result = BaseIssueModel::where('id',$issues['id'])->first();
+
+//            print_r("<pre>".$result);die;
+
+            if($result){
+                $result->desc = $issues['desc'];
                 if ($result->save()) {
                     $returnData = "Success";
                 } else {

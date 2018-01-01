@@ -108,7 +108,7 @@ class UserModel extends BaseUserModels
         $returnData = [];
 //        print_r('jkjjjj');die;
         if($userDetails){
-            $result = BaseUserModels::where('id',$userDetails['id'])->first();
+            $result = UserModel::where('id',$userDetails['id'])->first();
             if($result->save()){
                 $returnData = "Success";
                 } else {

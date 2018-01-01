@@ -4,13 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Model\UserModel;
 use Illuminate\Http\Request;
+use Illuminate\Session;
 
 class RegisterController extends Controller
 {
 
-    public function register( Request $request){
+    public function register(Request $request){
 
         $userData = [];
+
+        $this->validate($request,array(
+            'fname' => 'required',
+            'lname' => 'required',
+            'email' => 'required|unique',
+            'phnumber' => 'required',
+            'dob' => 'required',
+            'password' => 'required',
+        ));
+
         $userData['fname'] = $request['firstname'];
         $userData['lname'] = $request['lastname'];
         $userData['email'] = $request['email'];
@@ -22,7 +33,8 @@ class RegisterController extends Controller
             $userObj = new UserModel();
             $response = $userObj->saveUserDetails($userData);
             if($response == "Sucess"){
-                return view('login-new');
+                Session::flash('success','Successfully registered.');
+                return view('login');
             }else{
                 return view('register');
             }

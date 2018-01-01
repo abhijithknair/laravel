@@ -30,4 +30,38 @@ class AdminIssueSolveController extends Controller
         return $this->viewNoCache('adminissues', $resultData);
     }
 
+
+    public function userviewissue1(Request $request){
+
+//        print_r("<pre>".$request);die;
+
+        $id = $request->input('id');
+//        print_r("<pre>".$id);die;
+        $checkObj = new IssueModel();
+        $result =$checkObj->fetchIssue($id);
+//        print_r("<pre>".$result);die;
+        $resultData = [
+            'data' => $result
+        ];
+//        print_r($resultData['data']);die;
+        return $this->viewNoCache('userissueview', $resultData);
+    }
+
+
+    public function userviewissue2(Request $request){
+
+//        print_r("<pre>".$request);die;
+
+        $id = $request->input('id');
+//        print_r("<pre>".$id);die;
+        $checkObj = new IssueModel();
+        $result =$checkObj->fetchIssue($id);
+//        print_r("<pre>".$result);die;
+        $resultData = [
+            'data' => $result
+        ];
+//        print_r($resultData['data']);die;
+        return $this->viewNoCache('userissueedit2', $resultData);
+    }
+
 }

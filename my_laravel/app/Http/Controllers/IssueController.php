@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Basemodel\BaseIssueModel;
+use App\Model\UserModel;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Model\IssueModel;
 use App\Model\AuthModel;
 //use Illuminate\Support\Facades\Storage;
+use Session;
 
 class IssueController extends Controller
 {
@@ -15,8 +17,8 @@ class IssueController extends Controller
     public function upload(Request $request){
 
             $toCheck=[];
-
-//            print_r("<pre>".$request);die;
+//            $id = UserModel::find($id);
+//            print_r("<pre>".$id);die;
             if (Input::hasFile('file')) {
 
                 $file = $request->file('file');
@@ -42,31 +44,21 @@ class IssueController extends Controller
 //                print_r($au);die;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
                 $toCheck['user_id']="1";
                 $toCheck['filepath'] = $filePath;
 
-
-
-
-
                 $issue = new IssueModel();
                 $response = $issue->renameImage($toCheck);
+                $res = IssueModel::orderBy('id', 'desc')->paginate(10);
+
                 if ($response == "Success") {
-                    print_r("Issue posted.");
+                    Session::flash('success','The issue was successfully posted.');
+                    return view('/userhomepage')->with('issues', $res);
+//                    print_r("Issue posted.");
                 } else {
-                    print_r("Issue not posted.");
+                    Session::flash('success','The issue was successfully posted.');
+                    return view('/userhomepage')->with('issues', $res);
+//                    print_r("Issue not posted.");
                 }
             }
 

@@ -4,6 +4,8 @@
 <body>
 
 @include('partials._pending_nav')
+<div class="container">
+<div class="col-md-12">
 <table id="example" class="display" cellspacing="0" width="100%">
     <thead>
     <tr>
@@ -12,6 +14,7 @@
         <th>Description</th>
         <th>Status</th>
         <th>Image</th>
+        <th>Edit</th>
     </tr>
     </thead>
     @foreach($pending['pendings'] as $data)
@@ -33,6 +36,9 @@
                 <td>
                     <img height="40px" width="40px" src="{{ asset($data['filepath'])}}">
                 </td>
+                <td>
+                    <a href="{{ URL::to('/userViewIssue2?id='.$data['id']) }}">Edit</a>
+                </td>
             </tr>
 
         @endif
@@ -40,5 +46,7 @@
         {{--endif--}}
     @endforeach
 </table>
+</div>
+</div>
 </body>
 </html>

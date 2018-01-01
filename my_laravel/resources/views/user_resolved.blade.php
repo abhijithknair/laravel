@@ -3,6 +3,8 @@
 @include('partials._resolved_head')
 <body>
 @include('partials._resolved_nav')
+<div class="container">
+<div class="col-md-12">
 <table id="example" class="display" cellspacing="0" width="100%">
     <thead>
     <tr>
@@ -36,5 +38,7 @@
         @endif
     @endforeach
 </table>
+</div>
+</div>
 </body>
 </html>

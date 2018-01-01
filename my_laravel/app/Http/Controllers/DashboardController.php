@@ -8,6 +8,10 @@ use App\Model\IssueModel;
 use App\Basemodel\BaseUserModels;
 use Illuminate\Http\Request;
 
+use Auth;
+
+use Illuminate\Routing\Controller;
+
 class DashboardController extends Controller
 {
 public function dash()
@@ -17,7 +21,7 @@ public function dash()
 }
 public function userDeetailsUpdate(Request $request){
 
-    print_r("<pre>".$request);die;
+//    print_r("<pre>".$request);die;
     $user = UserModel::findOrFail($id);
     $user->fname = $request->get('fname');
     $user->lname = $request->get('lname');
@@ -53,7 +57,10 @@ public function show(){
 }
 
 public function userDetailsUpdate(Request $request){
+
+
     $toCheck = [];
+//    print_r($toCheck);die;
     $toCheck['fname'] = $request['fname'];
     $toCheck['lname'] = $request['lname'];
     $toCheck['phnumber'] = $request['phnumber'];
@@ -153,9 +160,10 @@ public function resolved(){
 
             $checkObj = new IssueModel();
             $result2 =$checkObj->fetchResolved();
+            $res = IssueModel::orderBy('id', 'desc')->paginate(10);
             if ($response == "Success") {
 
-                return view('dashboard');
+                return view('/userhomepage')->with('issues', $res);
             }
             if($response == "Super success")
             {
@@ -169,6 +177,10 @@ public function resolved(){
 
         }
 
+    }
+
+    public function userPostIssue(){
+        return view('dashboard');
     }
 
     public function showAdminDashboard(){
@@ -215,7 +227,10 @@ public function resolved(){
 
         if($response == "Success")
         {
-            return view('dashboard')->with('pending',$result);
+            $res = IssueModel::orderBy('id', 'desc')->paginate(10);
+            return view('/userhomepage')->with('issues', $res);
+
+//            return view('')->with('pending',$result);
 //                return view('admindashboard')->with('resolved',$result2);
 
         }
